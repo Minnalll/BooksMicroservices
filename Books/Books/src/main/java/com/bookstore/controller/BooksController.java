@@ -34,18 +34,22 @@ public class BooksController {
 		 List<BooksDto> books = serv.getBooks();
 		 return new ResponseEntity<>(books, HttpStatus.OK);
 	}
-	
+
+
 	@PostMapping("/create")
 	public ResponseEntity<BooksDto> createBooks(@RequestBody BooksDto bookDto) throws Exception{		
 		 BooksDto createBooks = serv.createBooks(bookDto);	
 		 return new ResponseEntity<BooksDto> (createBooks, HttpStatus.CREATED);
 	}
-	
+
 	//update method
 	@PutMapping("update/{bookId}")
     public ResponseEntity<BooksDto> Update(@PathVariable int bookId, @RequestBody BooksDto bookDto){
 		BooksDto updatedEmployee = serv.updateEmployee(bookId, bookDto);
 		return new ResponseEntity<BooksDto> (updatedEmployee, HttpStatus.CREATED);
     }
+
+//	@GetMapping
+
 
 }
