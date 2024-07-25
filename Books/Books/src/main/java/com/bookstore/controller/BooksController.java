@@ -40,7 +40,7 @@ public class BooksController {
 		 BooksDto createBooks = serv.createBooks(bookDto);	
 		 return new ResponseEntity<BooksDto> (createBooks, HttpStatus.CREATED);
 	}
-	
+	//update method
 	@PutMapping("update/{bookId}")
     public ResponseEntity<BooksDto> Update(@PathVariable int bookId, @RequestBody BooksDto bookDto){
 		BooksDto updatedEmployee = serv.updateEmployee(bookId, bookDto);
