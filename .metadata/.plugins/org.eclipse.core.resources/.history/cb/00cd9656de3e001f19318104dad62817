@@ -1,0 +1,31 @@
+package com.bookstore.mapper;
+
+import com.bookstore.dto.BooksDto;
+import com.bookstore.model.Books;
+
+public class BooksMapper {
+	
+	public static BooksDto mapToBooksDto(Books books) {
+		return new BooksDto(
+				books.getBookId(),
+				books.getBookName(),
+				books.getPublishedOn(),
+				books.getPurchasedOn(),
+				books.getStock(),
+				books.getAuthor()			
+		);
+	}
+	
+	public static Books mapToBooks(BooksDto booksDto) {
+		return new Books(
+				booksDto.getBookId();
+				booksDto.getBookName();
+				booksDto.getPublishedOn();
+				booksDto.getPurchasedOn();
+				booksDto.getStock();
+				booksDto.getAuthor();
+				
+				
+		);
+	}
+}

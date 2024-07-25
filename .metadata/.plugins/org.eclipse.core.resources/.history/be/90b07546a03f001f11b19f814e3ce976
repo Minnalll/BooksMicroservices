@@ -1,0 +1,93 @@
+package com.bookstore.service;
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.bookstore.dto.BooksDto;
+import com.bookstore.exception.BadRequest;
+import com.bookstore.exception.ResourceNotFoundException;
+import com.bookstore.model.Books;
+import com.bookstore.repo.booksRepo;
+
+@Service
+public class BooksServiceImpl implements iBooksService{
+	@Autowired
+	private booksRepo repo;
+	
+	public BooksDto getBook(int bookId) {
+		try {
+			Books getBooks = repo.findById(bookId).get();
+			BooksDto dto = new BooksDto();
+			BeanUtils.copyProperties(books, dto);
+			return dto;
+		} catch (Exception e) {
+			throw new ResourceNotFoundException("Book not found with requested ID.");
+		}		 
+	}
+
+	@Override
+	public List<BooksDto> getBooks() {
+		List<Books> findAll = repo.findAll();
+		if(findAll.isEmpty()) {
+			throw new ResourceNotFoundException("No Books Found!!!");
+		}
+		return findAll.stream().map(this::mapToBooksDto).toList();
+	}
+
+	@Override
+	public BooksDto createBooks(BooksDto booksDto) throws Exception {
+		try {
+			Books books = new Books();
+			BeanUtils.copyProperties(booksDto, books);
+			Books created = repo.save(books);
+			BooksDto returnDto = new BooksDto();
+			BeanUtils.copyProperties(created, returnDto);
+			return returnDto;
+		} catch (Exception e) {
+			throw new Exception("Data not updated to DB");
+		}		
+	}
+
+	@Override
+	public ResponseEntity<Books> deleteBooks(int eCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Books updateEmployee(int bookId, Books updateBooks) {
+		try {
+			BooksDto existingBook = getBook(bookId);
+			if (existingBook != null) {
+				existingBook.setBookId(updateBooks.getBookId());
+				existingBook.setBookName(updateBooks.getBookName());
+				existingBook.setPublishedOn(updateBooks.getPublishedOn());
+				existingBook.setPurchasedOn(updateBooks.getPurchasedOn());
+				existingBook.setStock(updateBooks.getStock());
+				existingBook.setAuthor(updateBooks.getAuthor());
+				Books updatedBooks = new Books();
+				BeanUtils.copyProperties(existingBook, updatedBooks);
+				Books saved = repo.save(updatedBooks);
+				return saved;
+			}
+		} catch (Exception e) {
+			throw new BadRequest("Student data not saved to DB");
+		}
+		return null;
+	}
+	
+	private BooksDto mapToBooksDto(Books books) {
+		return BooksDto.builder()
+				.bookId(books.getBookId())
+				.bookName(books.getBookName())
+				.publishedOn(books.getPublishedOn())
+				.purchasedOn(books.getPublishedOn())
+				.author(books.getAuthor())
+				.stock(books.getStock())				
+				.build();		
+	}
+}

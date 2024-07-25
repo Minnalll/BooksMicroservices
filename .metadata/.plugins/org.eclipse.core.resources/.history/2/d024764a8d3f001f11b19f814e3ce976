@@ -1,0 +1,69 @@
+package com.bookstore.service;
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.bookstore.dto.BooksDto;
+import com.bookstore.exception.ResourceNotFoundException;
+import com.bookstore.model.Books;
+import com.bookstore.repo.booksRepo;
+
+@Service
+public class BooksServiceImpl implements iBooksService{
+	@Autowired
+	private booksRepo repo;
+	
+	public BooksDto getBook(int bookId) {
+		try {
+			Books books = repo.findById(bookId).get();
+			BooksDto dto = new BooksDto();
+			BeanUtils.copyProperties(books, dto);
+			return dto;
+		} catch (Exception e) {
+			throw new ResourceNotFoundException("Book not found with requested ID.");
+		}		 
+	}
+
+	@Override
+	public List<Books> getBooks() {
+		List<Books> findAll = repo.findAll();
+		if(findAll.isEmpty()) {
+			throw new ResourceNotFoundException("No Books Found!!!");
+		}
+		return findAll;
+	}
+
+	@Override
+	public Books createBooks(Books books) {
+		Books created = repo.save(books);
+		return created;
+	}
+
+	@Override
+	public ResponseEntity<Books> deleteBooks(int eCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Books updateEmployee(int bookId, Books books) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private BooksDto mapToBooksDto(Books books) {
+		return BooksDto.builder()
+				.bookId(books.getBookId())
+				.bookName(books.getBookName())
+				.publishedOn(books.getPublishedOn())
+				.purchasedOn(books.getPublishedOn())
+				.author(books.getAuthor())
+				.stock(books.getStock())				
+				.build();
+		
+	}
+}

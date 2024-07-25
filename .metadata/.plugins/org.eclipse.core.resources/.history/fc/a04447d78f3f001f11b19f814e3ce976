@@ -1,0 +1,22 @@
+package com.bookstore.service;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+
+import com.bookstore.dto.BooksDto;
+import com.bookstore.model.Books;
+
+public interface iBooksService {
+	
+	public BooksDto getBook(int eCode);
+	
+	List<BooksDto> getBooks();
+	
+	Books createBooks (Books books);
+	
+	ResponseEntity<Books> deleteBooks (int eCode);
+
+	Books updateEmployee(int bookId, Books books);	
+
+}
