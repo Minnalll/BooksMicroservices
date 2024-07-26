@@ -1,17 +1,13 @@
 package com.bookstore.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.bookstore.dto.BooksDto;
 import com.bookstore.model.Books;
@@ -49,7 +45,16 @@ public class BooksController {
 		return new ResponseEntity<BooksDto> (updatedEmployee, HttpStatus.CREATED);
     }
 
-//	@GetMapping
+//	@GetMapping("/search")
+//	public List<Books> searchBooks(
+//			@RequestParam(required = true) String bookName,
+//			@RequestParam(required = false) String author,
+//			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate publishedOn,
+//			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate purchasedOn,
+//			@RequestParam(required = false) Integer minStock,
+//			@RequestParam(required = false) Integer maxStock) {
+//		return serv.searchBooks(bookName, author, publishedOn, purchasedOn, minStock, maxStock);
+//	}
 
 
 }

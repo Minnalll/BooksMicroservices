@@ -1,8 +1,10 @@
 package com.bookstore.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bookstore.utils.SearchSpecification;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,4 +78,12 @@ public class BooksServiceImpl implements iBooksService{
 			throw new BadRequest("Student data not saved to DB");
 		}
 	}
+
+	public List<Books> searchBooks1(String bookName, String author, Integer minStock, Integer maxStock) {
+		return repo.findByBookNameContainingAndAuthorContainingAndStockBetween(bookName, author, minStock, maxStock);
+	}
+
+//	public List<Books> searchBooks(String bookName, String author, LocalDate publishedOn, LocalDate purchasedOn, Integer minStock, Integer maxStock) {
+//		return repo.findAll(SearchSpecification.getBooksByCriteria(bookName, author, publishedOn, purchasedOn, minStock, maxStock));
+//	}
 }

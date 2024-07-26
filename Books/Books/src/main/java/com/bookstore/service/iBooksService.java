@@ -1,5 +1,6 @@
 package com.bookstore.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -18,5 +19,9 @@ public interface iBooksService {
 	ResponseEntity<Books> deleteBooks (int eCode);
 
 	BooksDto updateEmployee(int bookId, BooksDto bookDto);
+
+	public List<Books> searchBooks1(String bookName, String author, Integer minStock, Integer maxStock);
+
+//	public List<Books> searchBooks(String bookName, String author, LocalDate publishedOn, LocalDate purchasedOn, Integer minStock, Integer maxStock);
 
 }
