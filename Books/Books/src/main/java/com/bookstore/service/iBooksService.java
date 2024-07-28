@@ -3,6 +3,7 @@ package com.bookstore.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 
 import com.bookstore.dto.BooksDto;
@@ -20,8 +21,6 @@ public interface iBooksService {
 
 	BooksDto updateEmployee(int bookId, BooksDto bookDto);
 
-	public List<Books> searchBooks1(String bookName, String author, Integer minStock, Integer maxStock);
-
-//	public List<Books> searchBooks(String bookName, String author, LocalDate publishedOn, LocalDate purchasedOn, Integer minStock, Integer maxStock);
+	public List<Books> findByBookNameContainingOrPublishedOnBetween(String bookName, LocalDate startDate, LocalDate endDate);
 
 }

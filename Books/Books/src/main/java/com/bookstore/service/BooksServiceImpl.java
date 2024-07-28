@@ -79,11 +79,11 @@ public class BooksServiceImpl implements iBooksService{
 		}
 	}
 
-	public List<Books> searchBooks1(String bookName, String author, Integer minStock, Integer maxStock) {
-		return repo.findByBookNameContainingAndAuthorContainingAndStockBetween(bookName, author, minStock, maxStock);
+	@Override
+	public List<Books> findByBookNameContainingOrPublishedOnBetween(String bookName, LocalDate startDate, LocalDate endDate) {
+		return repo.findByBookNameContainingOrPublishedOnBetween(bookName, startDate, endDate);
 	}
 
-//	public List<Books> searchBooks(String bookName, String author, LocalDate publishedOn, LocalDate purchasedOn, Integer minStock, Integer maxStock) {
-//		return repo.findAll(SearchSpecification.getBooksByCriteria(bookName, author, publishedOn, purchasedOn, minStock, maxStock));
-//	}
+
+
 }

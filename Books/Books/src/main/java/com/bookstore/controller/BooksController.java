@@ -45,16 +45,12 @@ public class BooksController {
 		return new ResponseEntity<BooksDto> (updatedEmployee, HttpStatus.CREATED);
     }
 
-//	@GetMapping("/search")
-//	public List<Books> searchBooks(
-//			@RequestParam(required = true) String bookName,
-//			@RequestParam(required = false) String author,
-//			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate publishedOn,
-//			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate purchasedOn,
-//			@RequestParam(required = false) Integer minStock,
-//			@RequestParam(required = false) Integer maxStock) {
-//		return serv.searchBooks(bookName, author, publishedOn, purchasedOn, minStock, maxStock);
-//	}
+	@GetMapping("/search")
+	public ResponseEntity<List<Books>> searchBooks( @RequestParam("bookName") String bookName,
+									@RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+									@RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
+		return new ResponseEntity<>(serv.findByBookNameContainingOrPublishedOnBetween(bookName, startDate, endDate), HttpStatus.OK);
+	}
 
 }
