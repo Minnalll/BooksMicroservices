@@ -3,6 +3,7 @@ package com.bookstore.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.bookstore.model.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -45,12 +46,28 @@ public class BooksController {
 		return new ResponseEntity<BooksDto> (updatedEmployee, HttpStatus.CREATED);
     }
 
+//	@GetMapping("/search")
+//	public ResponseEntity<List<Books>> searchBooks( @RequestParam("bookName") String bookName,
+//									@RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+//									@RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+//
+//		return new ResponseEntity<>(serv.findByBookNameContainingOrPublishedOnBetween(bookName, startDate, endDate), HttpStatus.OK);
+//	}
+
 	@GetMapping("/search")
-	public ResponseEntity<List<Books>> searchBooks( @RequestParam("bookName") String bookName,
-									@RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-									@RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+	public List<Books> searchBooks(
+			@RequestParam(required = false) String bookName,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate publishedOnStart,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate publishedOnEnd,
+			@RequestParam(required = false) String authorName,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate authorDOB,
+			@RequestParam(required = false) String authorEmail) {
 
-		return new ResponseEntity<>(serv.findByBookNameContainingOrPublishedOnBetween(bookName, startDate, endDate), HttpStatus.OK);
+		Author author = new Author();
+		if (authorName != null && !authorName.isEmpty()) author.setName(authorName);
+		if (authorDOB != null) author.setDOB(authorDOB);
+		if (authorEmail != null && !authorEmail.isEmpty()) author.setEmail(authorEmail);
+
+		return serv.findBooks(bookName, publishedOnStart, publishedOnEnd, author);
 	}
-
 }

@@ -2,6 +2,11 @@ package com.bookstore.dto;
 
 import java.time.LocalDate;
 
+import com.bookstore.model.Author;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,5 +26,7 @@ public class BooksDto {
 	private LocalDate publishedOn;
 	private LocalDate purchasedOn;
 	private int stock;
-	private String author;
+
+	@Embedded
+	private Author author;
 }

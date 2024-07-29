@@ -14,6 +14,6 @@ import java.util.List;
 @Repository
 public interface BooksRepo extends JpaRepository<Books, Integer>, JpaSpecificationExecutor<Books> {
 
-    @Query("SELECT b FROM Books b WHERE b.bookName LIKE %:bookName% OR b.publishedOn BETWEEN :startDate AND :endDate")
-    List<Books> findByBookNameContainingOrPublishedOnBetween(@Param("bookName") String bookName, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+//    @Query("SELECT b FROM Books b WHERE b.bookName LIKE %:bookName% OR b.publishedOn BETWEEN :startDate AND :endDate")
+//    List<Books> findByBookNameContainingOrPublishedOnBetween(@Param("bookName") String bookName, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }
