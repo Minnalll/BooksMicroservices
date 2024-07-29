@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.bookstore.model.Author;
-import com.bookstore.utils.SearchSpecification;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -101,8 +100,7 @@ public class BooksServiceImpl implements iBooksService {
 			}
 			Books books = modelMapper.map(book, Books.class);
 			Books updated = repo.save(books);
-			BooksDto booksDto1 = modelMapper.map(updated, BooksDto.class);
-			return booksDto1;
+			return modelMapper.map(updated, BooksDto.class);
 		} catch (Exception e) {
 			throw new BadRequest("Student data not saved to DB");
 		}
