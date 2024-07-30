@@ -10,6 +10,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,12 @@ import com.bookstore.repo.BooksRepo;
 
 @Service
 public class BooksServiceImpl implements iBooksService {
-
 	@Autowired
 	private EntityManager entityManager;
-
 	@Autowired
 	private BooksRepo repo;
+
+	private static final String AUTHOR_FIELD = "author";
 
 	ModelMapper modelMapper = new ModelMapper();
 
@@ -67,7 +68,6 @@ public class BooksServiceImpl implements iBooksService {
 
 	@Override
 	public ResponseEntity<Books> deleteBooks(int eCode) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -130,13 +130,13 @@ public class BooksServiceImpl implements iBooksService {
 		}
 		if (author != null) {
 			if (author.getName() != null && !author.getName().isEmpty()) {
-				predicate = cb.and(predicate, cb.like(book.get("author").get("name"), "%" + author.getName() + "%"));
+				predicate = cb.and(predicate, cb.like(book.get(AUTHOR_FIELD).get("name"), "%" + author.getName() + "%"));
 			}
 			if (author.getDOB() != null) {
-				predicate = cb.and(predicate, cb.equal(book.get("author").get("dOB"), author.getDOB()));
+				predicate = cb.and(predicate, cb.equal(book.get(AUTHOR_FIELD).get("dOB"), author.getDOB()));
 			}
 			if (author.getEmail() != null && !author.getEmail().isEmpty()) {
-				predicate = cb.and(predicate, cb.like(book.get("author").get("email"), "%" + author.getEmail() + "%"));
+				predicate = cb.and(predicate, cb.like(book.get(AUTHOR_FIELD).get("email"), "%" + author.getEmail() + "%"));
 			}
 		}
 			query.where(predicate);
