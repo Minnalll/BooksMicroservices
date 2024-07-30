@@ -1,0 +1,9 @@
+Maven Commands to generate code coverage report:
+
+clean org.jacoco:jacoco-maven-plugin:prepare-agent install
+
+From <https://www.youtube.com/watch?v=hl9jsjIZTTk>
+
+clean verify sonar:sonar -Dsonar.token=sqp_9c40e751c39206d269758fdc1d6a00495857616a
+
+mvn clean verify sonar:sonar \-Dsonar.projectKey=Books1 \ -Dsonar.projectName='Books1' \  -Dsonar.host.url=http://localhost:9000 \ -Dsonar.token=sqp_0648be7d3a41c0c22ab868617cb3d489ae6a20e4
