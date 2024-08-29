@@ -1,10 +1,7 @@
 package com.bookstore.dto;
 
-import com.bookstore.model.Client;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -19,5 +16,5 @@ public class ClientDto {
     private long phoneNumber;
     private String email;
 
-    private List<BooksDto> books;
+    private BooksDto books;
 }

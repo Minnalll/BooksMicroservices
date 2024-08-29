@@ -20,7 +20,7 @@ public class ClientController {
     @GetMapping("/find/{clientId}")
     public ResponseEntity<ClientDto> findOne(@PathVariable int clientId){
         ClientDto client = serv.getClient(clientId);
-        return new ResponseEntity<>(client, HttpStatus.OK);
+        return new ResponseEntity<ClientDto>(client, HttpStatus.OK);
     }
 
     @GetMapping("/find")

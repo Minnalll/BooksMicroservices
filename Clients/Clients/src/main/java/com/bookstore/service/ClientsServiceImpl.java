@@ -5,9 +5,8 @@ import com.bookstore.exception.BadRequest;
 import com.bookstore.exception.ResourceNotFoundException;
 import com.bookstore.model.Client;
 import com.bookstore.repo.ClientsRepo;
-import jakarta.persistence.EntityManager;
+import com.bookstore.util.ClientMapperImpl;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,14 +20,17 @@ public class ClientsServiceImpl implements  iClientsService{
     @Autowired
     private ClientsRepo repo;
 
+    @Autowired
+    private ClientMapperImpl clientMapper;
+
     ModelMapper modelMapper = new ModelMapper();
 
     public ClientDto getClient(int clientId) {
         try {
             Client getClients = repo.findById(clientId).get();
-            ClientDto dto = new ClientDto();
-            BeanUtils.copyProperties(getClients, dto);
-            return dto;
+//            ClientDto dto = new ClientDto();
+            return clientMapper.toClientDto(getClients);
+
         } catch (Exception e) {
             throw new ResourceNotFoundException("Client not found with requested ID.");
         }
