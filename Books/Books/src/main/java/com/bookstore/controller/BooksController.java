@@ -65,7 +65,7 @@ public class BooksController {
 
 		Author author = new Author();
 		if (authorName != null && !authorName.isEmpty()) author.setName(authorName);
-		if (authorDOB != null) author.setDOB(authorDOB);
+		if (authorDOB != null) author.setDob(authorDOB);
 		if (authorEmail != null && !authorEmail.isEmpty()) author.setEmail(authorEmail);
 
 		return serv.findBooks(bookName, publishedOnStart, publishedOnEnd, author);

@@ -3,11 +3,9 @@ package com.bookstore.dto;
 import java.time.LocalDate;
 
 import com.bookstore.model.Author;
+import com.bookstore.model.Client;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +21,6 @@ import org.springframework.format.annotation.NumberFormat;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BooksDto {
-	@NotNull
 	private Integer bookId;
 	private String bookName;
 	@Past(message = "Date must be in the past")
@@ -35,6 +32,8 @@ public class BooksDto {
 	@NumberFormat
 	private int stock;
 
-	@Embedded
+
 	private Author author;
+
+	private Client client;
 }

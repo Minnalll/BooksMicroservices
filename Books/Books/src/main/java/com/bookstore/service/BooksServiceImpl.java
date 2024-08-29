@@ -36,6 +36,7 @@ public class BooksServiceImpl implements iBooksService {
 
 	public BooksDto getBook(int bookId) {
 		try {
+//			Books getBooks = repo.findBookWithClient(bookId);
 			Books getBooks = repo.findById(bookId).get();
 			BooksDto dto = new BooksDto();
 			BeanUtils.copyProperties(getBooks, dto);
@@ -91,8 +92,8 @@ public class BooksServiceImpl implements iBooksService {
 				if (booksDto.getAuthor().getName() != null) {
 					book.getAuthor().setName(booksDto.getAuthor().getName());
 				}
-				if (booksDto.getAuthor().getDOB() != null) {
-					book.getAuthor().setDOB(booksDto.getAuthor().getDOB());
+				if (booksDto.getAuthor().getDob() != null) {
+					book.getAuthor().setDob(booksDto.getAuthor().getDob());
 				}
 				if (booksDto.getAuthor().getEmail() != null) {
 					book.getAuthor().setEmail(booksDto.getAuthor().getEmail());
@@ -132,8 +133,8 @@ public class BooksServiceImpl implements iBooksService {
 			if (author.getName() != null && !author.getName().isEmpty()) {
 				predicate = cb.and(predicate, cb.like(book.get(AUTHOR_FIELD).get("name"), "%" + author.getName() + "%"));
 			}
-			if (author.getDOB() != null) {
-				predicate = cb.and(predicate, cb.equal(book.get(AUTHOR_FIELD).get("dOB"), author.getDOB()));
+			if (author.getDob() != null) {
+				predicate = cb.and(predicate, cb.equal(book.get(AUTHOR_FIELD).get("dOB"), author.getDob()));
 			}
 			if (author.getEmail() != null && !author.getEmail().isEmpty()) {
 				predicate = cb.and(predicate, cb.like(book.get(AUTHOR_FIELD).get("email"), "%" + author.getEmail() + "%"));

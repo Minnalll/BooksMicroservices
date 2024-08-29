@@ -1,7 +1,8 @@
 package com.bookstore.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
+
 
 @Getter
 @Setter
@@ -16,5 +17,4 @@ public class ClientDto {
     private long phoneNumber;
     private String email;
 
-    private BooksDto books;
 }
