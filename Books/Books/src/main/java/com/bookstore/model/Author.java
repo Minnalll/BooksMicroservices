@@ -23,7 +23,7 @@ import java.time.LocalDate;
                 column = @Column(name = "author_name")
         ),
         @AttributeOverride(
-                name = "dOB",
+                name = "dob",
                 column = @Column(name = "author_dob")
         ),
         @AttributeOverride(
@@ -33,6 +33,6 @@ import java.time.LocalDate;
 })
 public class Author {
     private String name;
-    private LocalDate dOB;
+    private LocalDate dob;
     private String email;
 }

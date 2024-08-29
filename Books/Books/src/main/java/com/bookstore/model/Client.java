@@ -24,6 +24,4 @@ public class Client {
     private long phoneNumber;
     private String email;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Books> books;
 }
