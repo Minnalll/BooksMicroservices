@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ch.qos.logback.classic.Level;
+import com.bookstore.exception.ApplicationException;
 import com.bookstore.model.Author;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -12,6 +14,8 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +29,9 @@ import com.bookstore.repo.BooksRepo;
 
 @Service
 public class BooksServiceImpl implements iBooksService {
+
+	private static final Logger logger = LoggerFactory.getLogger(BooksServiceImpl.class);
+
 	@Autowired
 	private EntityManager entityManager;
 	@Autowired
@@ -35,14 +42,22 @@ public class BooksServiceImpl implements iBooksService {
 	ModelMapper modelMapper = new ModelMapper();
 
 	public BooksDto getBook(int bookId) {
+		logger.debug("Entering method getBook with parameters: {}", bookId);
 		try {
-//			Books getBooks = repo.findBookWithClient(bookId);
-			Books getBooks = repo.findById(bookId).get();
-			BooksDto dto = new BooksDto();
-			BeanUtils.copyProperties(getBooks, dto);
-			return dto;
+			return repo.findById(bookId)
+					.map(book -> {
+						BooksDto dto = new BooksDto();
+						BeanUtils.copyProperties(book, dto);
+						logger.info("Books with ID {} registered successfully.", bookId);
+						return dto;
+					})
+					.orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + bookId));
+		} catch (ResourceNotFoundException e) {
+			logger.error("Book with ID {} not found.", bookId, e);
+			throw e;
 		} catch (Exception e) {
-			throw new ResourceNotFoundException("Book not found with requested ID.");
+			logger.error("An unexpected error occurred while fetching the book with ID {}.", bookId, e); // Log the full exception
+			throw new ApplicationException("An error occurred while fetching the book. Please try again later.", e);
 		}
 	}
 
